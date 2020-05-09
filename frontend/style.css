@@ -1,0 +1,27 @@
+#dashboard-title {
+    text-align: center;
+}
+
+.dashboard-total-layout {
+    height: 500px;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-style: solid;
+    border-color: black;
+    display: grid;
+    grid: 100px / 400px auto;
+}
+
+.dashboard-total-layout > div {
+    height: inherit;
+    border-style: solid;
+    border-color: black;
+}
+
+.dashboard-add-employee > h2 {
+    text-align: center;
+}
+
+.employee-form-area {
+    margin: 10px;
+}
