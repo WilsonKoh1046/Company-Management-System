@@ -23,7 +23,7 @@ public class DepartmentController {
     }
 
     @GetMapping("/allDepartments")
-    public ArrayList<Department> getAllDepartments() {
+    public List<Department> getAllDepartments() {
         return departmentService.getAllDepartments();
     }
 
@@ -33,10 +33,10 @@ public class DepartmentController {
         departmentService.createNewDepartment(department);
     }
 
-    @PostMapping("/{departmentId}/addNewEmployee/employeeId/{employeeId}")
+    @PostMapping("/{departmentId}/addNewEmployee")
     @ResponseStatus(HttpStatus.CREATED)
     public void addNewEmployeeToDepartment(@PathVariable("departmentId") int departmentId,
-                                           @PathVariable("employeeId") int employeeId) {
-        departmentService.addNewEmployeeToDepartment(departmentId, employeeId);
+                                           @RequestBody Employee employee) {
+        departmentService.addNewEmployeeToDepartment(departmentId, employee);
     }
 }

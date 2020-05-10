@@ -1,9 +1,6 @@
 package com.example.company.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +8,12 @@ import java.util.List;
 public class Department {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "department_auto")
     private int departmentId;
     private String departmentName;
     private int departmentProfit;
-    private ArrayList<Integer> employees; // List<> won't work
+    @OneToMany(mappedBy = "department")
+    private List<Employee> employees;
 
     public int getDepartmentId() {
         return departmentId;
@@ -41,15 +39,15 @@ public class Department {
         this.departmentProfit = departmentProfit;
     }
 
-    public ArrayList<Integer> getEmployees() {
+    public void addEmployee(Employee employee) {
+        this.employees.add(employee);
+    }
+
+    public List<Employee> getEmployees() {
         return employees;
     }
 
     public void setEmployees() {
         this.employees = new ArrayList<>();
-    }
-
-    public void addEmployee(int employeeId) {
-        this.employees.add(employeeId);
     }
 }

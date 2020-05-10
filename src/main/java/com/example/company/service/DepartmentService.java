@@ -24,18 +24,27 @@ public class DepartmentService {
         departmentRepository.save(toEntity(department));
     }
 
-    public ArrayList<Department> getAllDepartments() {
-        ArrayList<Department> list_of_departments = new ArrayList<>();
+    public List<Department> getAllDepartments() {
+        List<Department> list_of_departments = new ArrayList<>();
         departmentRepository.findAll().forEach(list_of_departments::add);
         return list_of_departments;
     }
 
-    public void addNewEmployeeToDepartment(int departmentId, int employeeId) {
+    public void addNewEmployeeToDepartment(int departmentId, Employee employee) {
         Optional<Department> targeted_department = departmentRepository.findById(departmentId);
         if (targeted_department.isPresent()) {
-            targeted_department.get().addEmployee(employeeId);
+            targeted_department.get().addEmployee(toEmployee(employee));
             departmentRepository.save(targeted_department.get());
         }
+    }
+
+    private Employee toEmployee(Employee employee) {
+        Employee newEmployee = new Employee();
+        newEmployee.setEmployeeId(employee.getEmployeeId());
+        newEmployee.setEmployeeName(employee.getEmployeeName());
+        newEmployee.setEmployeeRole(employee.getEmployeeRole());
+        newEmployee.setEmployeeSalary(employee.getEmployeeSalary());
+        return newEmployee;
     }
 
     private Department toEntity(Department department) {
