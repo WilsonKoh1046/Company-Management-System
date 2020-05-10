@@ -25,3 +25,33 @@
 .employee-form-area {
     margin: 10px;
 }
+
+.dashboard-show-employees-header {
+    display: grid;
+    grid: 100px / 650px 100px;
+    width: 100%;
+    height: 5em;
+}
+
+.dashboard-show-employees-header > h2 {
+    text-align: center;
+}
+
+.dashboard-show-employees-header > button {
+    margin-top: 1em;
+    height: 4em;
+    border-radius: 10%;
+    cursor: pointer;
+    color: white;
+    background-color: black;
+}
+
+#employee-table {
+    width: 100%;
+}
+
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+    padding: 0.5em;
+}

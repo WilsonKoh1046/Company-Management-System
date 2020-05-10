@@ -31,7 +31,20 @@
                     <button onclick="submit()" class="employee-submit-button">Create</button>
                 </div> 
             </div>
-            <div class="dashboard-show-employees"></div> 
+            <div class="dashboard-show-employees">
+                <div class="dashboard-show-employees-header">
+                    <h2>All Employees: </h2>
+                    <button onclick="refresh()">Refresh</button>
+                </div>
+                <table id="employee-table">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Salary</th>
+                    </tr>  
+                </table>
+            </div> 
         </div>
         
         <script src="script.js" async defer></script>
