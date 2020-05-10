@@ -9,7 +9,7 @@ function submit() {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/employee/add",
+        url: "http://localhost:8080/api/employee/add",
         data: JSON.stringify(employeeData),
         contentType: "application/json",
         // don't use the below line if the expected response is not JSON type object
@@ -30,7 +30,7 @@ function refresh() {
     let employeeTable = document.getElementById("employee-table");
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/employee/allEmployees",
+        url: "http://localhost:8080/api/employee/allEmployees",
         contentType: "application/json",
         success: function(data) {
             let allId = [];
