@@ -4,8 +4,9 @@ function submit() {
     let name = document.getElementById("employeeName");
     let role = document.getElementById("employeeRole");
     let salary = document.getElementById("employeeSalary");
+    let departmentId = document.getElementById("employeeDepartmentId");
 
-    let employeeData = {"employeeName": name.value, "employeeRole": role.value, "employeeSalary": salary.value};
+    let employeeData = {"employeeName": name.value, "employeeRole": role.value, "employeeSalary": salary.value, "departmentId": departmentId.value};
 
     $.ajax({
         type: "POST",
@@ -18,6 +19,7 @@ function submit() {
             name.value = '';
             role.value = '';
             salary.value = '';
+            departmentId.value = '';
             alert("Successfully created new employee!");
         },
         error: function(error) {
