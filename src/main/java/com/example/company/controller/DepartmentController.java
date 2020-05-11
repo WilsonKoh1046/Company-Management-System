@@ -32,11 +32,4 @@ public class DepartmentController {
     public void createNewDepartment(@RequestBody Department department) {
         departmentService.createNewDepartment(department);
     }
-
-    @PostMapping("/{departmentId}/addNewEmployee")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addNewEmployeeToDepartment(@PathVariable("departmentId") int departmentId,
-                                           @RequestBody Employee employee) {
-        departmentService.addNewEmployeeToDepartment(departmentId, employee);
-    }
 }

@@ -30,28 +30,12 @@ public class DepartmentService {
         return list_of_departments;
     }
 
-    public void addNewEmployeeToDepartment(int departmentId, Employee employee) {
-        Optional<Department> targeted_department = departmentRepository.findById(departmentId);
-        if (targeted_department.isPresent()) {
-            targeted_department.get().addEmployee(toEmployee(employee));
-            departmentRepository.save(targeted_department.get());
-        }
-    }
-
-    private Employee toEmployee(Employee employee) {
-        Employee newEmployee = new Employee();
-        newEmployee.setEmployeeId(employee.getEmployeeId());
-        newEmployee.setEmployeeName(employee.getEmployeeName());
-        newEmployee.setEmployeeRole(employee.getEmployeeRole());
-        newEmployee.setEmployeeSalary(employee.getEmployeeSalary());
-        return newEmployee;
-    }
-
     private Department toEntity(Department department) {
         Department entity = new Department();
+        entity.setDepartmentId(department.getDepartmentId());
         entity.setDepartmentName(department.getDepartmentName());
         entity.setDepartmentProfit(department.getDepartmentProfit());
-        entity.setEmployees();
+        entity.setEmployees(department.getEmployees());
         return entity;
     }
 }

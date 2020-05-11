@@ -9,10 +9,14 @@ public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "department_auto")
+    @Column(name = "department_id")
     private int departmentId;
+    @Column(name = "department_name")
     private String departmentName;
     private int departmentProfit;
-    @OneToMany(mappedBy = "department")
+
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "department_id", referencedColumnName = "department_id")
     private List<Employee> employees;
 
     public int getDepartmentId() {
@@ -39,15 +43,11 @@ public class Department {
         this.departmentProfit = departmentProfit;
     }
 
-    public void addEmployee(Employee employee) {
-        this.employees.add(employee);
-    }
-
     public List<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees() {
-        this.employees = new ArrayList<>();
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 }

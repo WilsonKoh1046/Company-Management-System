@@ -7,12 +7,15 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "employee_auto") // use it in both table so won't share the id sequence
+    @Column(name = "employee_id")
     private int employeeId;
+    @Column(name = "employee_name")
     private String employeeName;
     private String employeeRole;
     private int employeeSalary;
-    @ManyToOne
-    private Department department;
+
+    @Column(name = "department_id")
+    private int departmentId;
 
     public int getEmployeeId() {
         return employeeId;
@@ -46,11 +49,11 @@ public class Employee {
         this.employeeSalary = employeeSalary;
     }
 
-    public Department getDepartment() {
-        return department;
+    public int getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
     }
 }
