@@ -20,6 +20,7 @@ function submit() {
             role.value = '';
             salary.value = '';
             departmentId.value = '';
+            refresh();
             alert("Successfully created new employee!");
         },
         error: function(error) {
