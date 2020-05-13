@@ -39,16 +39,33 @@ function refreshDepartment() {
                     let newDepartmentID = newDepartmentEntry.insertCell(0);
                     let newDepartmentName = newDepartmentEntry.insertCell(1);
                     let newDepartmentProfit = newDepartmentEntry.insertCell(2);
+                    let newDepartmentNumberOfEmployee = newDepartmentEntry.insertCell(3);
                     newDepartmentID.innerHTML = data[i].departmentId;
                     newDepartmentName.innerHTML = data[i].departmentName;
                     newDepartmentProfit.innerHTML = data[i].departmentProfit;
+                    newDepartmentNumberOfEmployee.innerHTML = data[i].employees.length;
                 }
             }
+            updateNumberOfEmployee(data);
         },
         error: function(error) {
             alert("Failed to refresh department table");
         }
     })
+}
+
+function updateNumberOfEmployee(data) {
+    let departmentTable = document.getElementById("department-table").getElementsByTagName("tbody")[0];
+    let allNumberOfEmployee = [];
+    for (let i = 0; i < data.length; i++) {
+        allNumberOfEmployee[i] = data[i].employees.length;
+    }
+    for (let j = 0; j < departmentTable.rows.length; j++) {
+        let last_cell = departmentTable.rows[j].cells[departmentTable.rows[j].cells.length - 1];
+        if (last_cell.innerHTML != allNumberOfEmployee[j]) {
+            last_cell.innerHTML = allNumberOfEmployee[j];
+        }
+    }
 }
 
 function submit() {
@@ -72,6 +89,7 @@ function submit() {
             salary.value = '';
             departmentId.value = '';
             refresh();
+            refreshDepartment();
             // alert("Successfully created new employee!");
         },
         error: function(error) {
