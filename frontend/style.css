@@ -46,6 +46,12 @@
     background-color: black;
 }
 
+.employee-table-section {
+    display: block;
+    height: 410px;
+    overflow-y: scroll;
+}
+
 #employee-table {
     width: 100%;
 }

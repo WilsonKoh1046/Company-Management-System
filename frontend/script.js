@@ -21,7 +21,7 @@ function submit() {
             salary.value = '';
             departmentId.value = '';
             refresh();
-            alert("Successfully created new employee!");
+            // alert("Successfully created new employee!");
         },
         error: function(error) {
             alert("Failed to create new employee");
@@ -30,16 +30,17 @@ function submit() {
 }
 
 function refresh() {
-    let employeeTable = document.getElementById("employee-table");
+    let employeeTable = document.getElementById("employee-table").getElementsByTagName("tbody")[0];
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/api/employee/allEmployees",
         contentType: "application/json",
         success: function(data) {
             let allId = [];
-            for (let i = 1; i < employeeTable.rows.length; i++) {
-                allId[i - 1] = employeeTable.rows[i].cells[0].innerHTML;
+            for (let i = 0; i < employeeTable.rows.length; i++) {
+                allId[i] = employeeTable.rows[i].cells[0].innerHTML;
             }
+            console.log(allId);
             for (let i = 0; i < data.length; i++) {
                 // Perform check on all the employee ID to ensure no duplication 
                 if (!allId.includes(data[i].employeeId.toString())) {
