@@ -32,6 +32,10 @@ public class EmployeeService {
     public List<Employee> getAllEmployees() {
         List<Employee> list_of_employee = new ArrayList<>();
         employeeRepository.findAll().forEach(list_of_employee::add);
+        for (Employee employee: list_of_employee) {
+            Optional<Department> targeted_department = departmentRepository.findById(employee.getDepartmentId());
+            targeted_department.ifPresent(department -> employee.setDepartmentName(department.getDepartmentName()));
+        }
         return list_of_employee;
     }
 
@@ -41,8 +45,6 @@ public class EmployeeService {
         entity.setEmployeeRole(employee.getEmployeeRole());
         entity.setEmployeeSalary(employee.getEmployeeSalary());
         entity.setDepartmentId(employee.getDepartmentId());
-        Optional<Department> targeted_department = departmentRepository.findById(employee.getDepartmentId());
-        targeted_department.ifPresent(department -> entity.setDepartmentName(department.getDepartmentName()));
         return entity;
     }
 }
