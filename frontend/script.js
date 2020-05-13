@@ -100,10 +100,12 @@ function refresh() {
                     let newEmployeeName = newEmployeeEntry.insertCell(1);
                     let newEmployeeRole = newEmployeeEntry.insertCell(2);
                     let newEmployeeSalary = newEmployeeEntry.insertCell(3);
+                    let newEmployeeDepartment = newEmployeeEntry.insertCell(4);
                     newEmployeeID.innerHTML = data[i].employeeId;
                     newEmployeeName.innerHTML = data[i].employeeName;
                     newEmployeeRole.innerHTML = data[i].employeeRole;
                     newEmployeeSalary.innerHTML = data[i].employeeSalary;
+                    newEmployeeDepartment.innerHTML = data[i].departmentName;
                 }
             }
         },

@@ -4,7 +4,6 @@ import com.example.company.model.Department;
 import com.example.company.model.Employee;
 import com.example.company.repository.DepartmentRepository;
 import com.example.company.repository.EmployeeRepository;
-import com.sun.tools.jconsole.JConsoleContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +17,12 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    @Autowired
+    private DepartmentRepository departmentRepository;
+
+    public EmployeeService(EmployeeRepository employeeRepository, DepartmentRepository departmentRepository) {
         this.employeeRepository = employeeRepository;
+        this.departmentRepository = departmentRepository;
     }
 
     public void addNewEmployee(Employee employee) {
@@ -29,6 +32,10 @@ public class EmployeeService {
     public List<Employee> getAllEmployees() {
         List<Employee> list_of_employee = new ArrayList<>();
         employeeRepository.findAll().forEach(list_of_employee::add);
+        for (Employee employee: list_of_employee) {
+            Optional<Department> targeted_department = departmentRepository.findById(employee.getDepartmentId());
+            targeted_department.ifPresent(department -> employee.setDepartmentName(department.getDepartmentName()));
+        }
         return list_of_employee;
     }
 

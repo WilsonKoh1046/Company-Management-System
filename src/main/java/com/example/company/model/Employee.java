@@ -17,6 +17,8 @@ public class Employee {
     @Column(name = "department_id")
     private int departmentId;
 
+    private String departmentName;
+
     public int getEmployeeId() {
         return employeeId;
     }
@@ -55,5 +57,13 @@ public class Employee {
 
     public void setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 }
