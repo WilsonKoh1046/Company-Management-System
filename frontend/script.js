@@ -1,5 +1,56 @@
 'use strict'
 
+function addDepartment() {
+    let name = document.getElementById("departmentName");
+    let profit = document.getElementById("departmentProfit");
+
+    let departmentData = {"departmentName": name.value, "departmentProfit": profit.value};
+
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/api/department/add",
+        data: JSON.stringify(departmentData),
+        contentType: "application/json",
+        success: function() {
+            name.value = '';
+            profit.value = '';
+            refreshDepartment();
+        },
+        error: function(error) {
+            alert("Failed to add department");
+        }
+    })
+}
+
+function refreshDepartment() {
+    let departmentTable = document.getElementById("department-table").getElementsByTagName("tbody")[0];
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/api/department/allDepartments",
+        contentType: "application/json",
+        success: function(data) {
+            let allId = [];
+            for (let i = 0; i < departmentTable.rows.length; i++) {
+                allId[i] = departmentTable.rows[i].cells[0].innerHTML;
+            }
+            for (let i = 0; i < data.length; i++) {
+                if (!allId.includes(data[i].departmentId.toString())) {
+                    let newDepartmentEntry = departmentTable.insertRow(-1);
+                    let newDepartmentID = newDepartmentEntry.insertCell(0);
+                    let newDepartmentName = newDepartmentEntry.insertCell(1);
+                    let newDepartmentProfit = newDepartmentEntry.insertCell(2);
+                    newDepartmentID.innerHTML = data[i].departmentId;
+                    newDepartmentName.innerHTML = data[i].departmentName;
+                    newDepartmentProfit.innerHTML = data[i].departmentProfit;
+                }
+            }
+        },
+        error: function(error) {
+            alert("Failed to refresh department table");
+        }
+    })
+}
+
 function submit() {
     let name = document.getElementById("employeeName");
     let role = document.getElementById("employeeRole");

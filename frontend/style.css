@@ -22,11 +22,15 @@
     text-align: center;
 }
 
-.employee-form-area {
+.dashboard-add-department > h2 {
+    text-align: center;
+}
+
+.employee-form-area, .department-form-area {
     margin: 10px;
 }
 
-.dashboard-show-employees-header {
+.dashboard-show-employees-header, .dashboard-show-department-header {
     display: grid;
     grid: 100px / 650px 100px;
     width: 100%;
@@ -34,6 +38,10 @@
 }
 
 .dashboard-show-employees-header > h2 {
+    text-align: center;
+}
+
+.dashboard-show-department-header > h2 {
     text-align: center;
 }
 
@@ -46,13 +54,22 @@
     background-color: black;
 }
 
-.employee-table-section {
+.dashboard-show-department-header > button {
+    margin-top: 1em;
+    height: 4em;
+    border-radius: 10%;
+    cursor: pointer;
+    color: white;
+    background-color: black;
+}
+
+.employee-table-section, .department-table-section {
     display: block;
     height: 410px;
     overflow-y: scroll;
 }
 
-#employee-table {
+#employee-table, #department-table {
     width: 100%;
 }
 
