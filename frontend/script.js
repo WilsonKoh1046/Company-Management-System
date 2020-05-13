@@ -39,14 +39,38 @@ function refreshDepartment() {
                     let newDepartmentID = newDepartmentEntry.insertCell(0);
                     let newDepartmentName = newDepartmentEntry.insertCell(1);
                     let newDepartmentProfit = newDepartmentEntry.insertCell(2);
+                    let newDepartmentNumberofEmployee = newDepartmentEntry.insertCell(3);
                     newDepartmentID.innerHTML = data[i].departmentId;
                     newDepartmentName.innerHTML = data[i].departmentName;
                     newDepartmentProfit.innerHTML = data[i].departmentProfit;
+                    newDepartmentNumberofEmployee.innerHTML = data[i].employees.length;
+                    console.log(data[i].employees.length);
                 }
             }
         },
         error: function(error) {
             alert("Failed to refresh department table");
+        }
+    })
+}
+
+function updateNumberofEmployee() {
+    let departmentTable = document.getElementById("department-table").getElementsByTagName("tbody")[0];
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/api/department/allDepartments",
+        contentType: "application/json",
+        success: function(data) {
+            for (let i = 0; i < departmentTable.rows.length; i++) {
+                for (let j = 0; j < data.length; j++) {
+                    if (departmentTable.rows[i].cells[departmentTable.rows[i].cells.length - 1] != data[j].employees.length) {
+                        departmentTable.rows[i].cells[departmentTable.rows[i].cells.length - 1].innerHTML = data[j].employees.length;
+                    }
+                }
+            }
+        },
+        error: function(error) {
+            alert("Failed to update number of employee");
         }
     })
 }
@@ -72,7 +96,7 @@ function submit() {
             salary.value = '';
             departmentId.value = '';
             refresh();
-            // alert("Successfully created new employee!");
+            updateNumberofEmployee();
         },
         error: function(error) {
             alert("Failed to create new employee");
