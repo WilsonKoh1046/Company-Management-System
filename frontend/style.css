@@ -1,3 +1,8 @@
+body {
+    background-color: black;
+    color: white;
+}
+
 #dashboard-title {
     text-align: center;
 }
@@ -10,12 +15,14 @@
     border-color: black;
     display: grid;
     grid: 100px / 400px auto;
+    color: black;
 }
 
 .dashboard-total-layout > div {
     height: inherit;
     border-style: solid;
     border-color: black;
+    background-color: white;
 }
 
 .dashboard-add-employee > h2 {
