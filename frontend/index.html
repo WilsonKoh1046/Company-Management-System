@@ -14,9 +14,13 @@
     </head>
     <body>
         <h1 id="dashboard-title">Company Management System</h1>
+        <nav class="nav-bar">
+            <a href="#department">Department</a>
+            <a href="#employee">Employee</a>
+        </nav>
 
         <!-- Department section --> 
-        <div class="dashboard-total-layout">
+        <div id="department" class="dashboard-total-layout">
             <div class="dashboard-add-department">
                 <h2>Add Department: </h2>
                 <div class="department-form-area">
@@ -50,7 +54,7 @@
         </div>
         <br>
         <!-- Employee section -->
-        <div class="dashboard-total-layout">
+        <div id="employee" class="dashboard-total-layout">
             <div class="dashboard-add-employee">
                 <h2>Add New Employee: </h2>
                 <div class="employee-form-area">
@@ -87,6 +91,10 @@
                 </div>
             </div> 
         </div>
+        <nav class="nav-bar">
+            <a href="#department">Department</a>
+            <a href="#employee">Employee</a>
+        </nav>
         
         <script src="script.js" async defer></script>
     </body>
