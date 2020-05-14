@@ -1,5 +1,22 @@
 'use strict'
 
+function updateCompanyProfit() {
+    let profit = document.getElementById("company-profit");
+
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/api/finance/getCompanyProfit",
+        contentType: "application/json",
+        success: function(data) {
+            console.log(data);
+            profit.innerHTML = "$" + data;
+        },
+        error: function(error) {
+            alert("Failed to update company's profit");
+        }
+    })
+}
+
 function addDepartment() {
     let name = document.getElementById("departmentName");
     let profit = document.getElementById("departmentProfit");
@@ -46,6 +63,7 @@ function refreshDepartment() {
                     newDepartmentNumberOfEmployee.innerHTML = data[i].employees.length;
                 }
             }
+            updateCompanyProfit();
             updateNumberOfEmployee(data);
         },
         error: function(error) {

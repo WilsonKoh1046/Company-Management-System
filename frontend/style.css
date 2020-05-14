@@ -9,6 +9,7 @@ body {
 
 .nav-bar {
     margin-left: 50px;
+    margin-right: 50px;
 }
 
 .nav-bar > a {
@@ -22,6 +23,19 @@ body {
     color: black;
     text-decoration: none;
     background-color: white;
+}
+
+#company-finance {
+    margin-left: 52px;
+    margin-right: 52px;
+    margin-bottom: 15px;
+    padding: 1em;
+    background-color: white;
+    color: black;
+}
+
+.company-finance-title {
+    text-align: center;
 }
 
 .dashboard-total-layout {
