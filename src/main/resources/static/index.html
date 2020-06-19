@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Company Management System</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1 id="dashboard-title">Company Management System</h1>
+        <nav class="nav-bar">
+            <a href="#company-finance">Finance</a>
+            <a href="#department">Department</a>
+            <a href="#employee">Employee</a>
+        </nav>
+
+        <!-- Company finance section -->
+        <div id="company-finance">
+            <h2 class="company-finance-title">Finance</h2>
+            <hr>
+            <p>Company's Profit:</p>
+            <p id="company-profit">0</p>
+        </div>
+
+        <!-- Department section --> 
+        <div id="department" class="dashboard-total-layout">
+            <div class="dashboard-add-department">
+                <h2>Add Department: </h2>
+                <div class="department-form-area">
+                    <p>Name: </p>
+                    <input type="text" id="departmentName">
+                    <p>Profit: </p>
+                    <input type="number" id="departmentProfit">
+                    <p></p>
+                    <button onclick="addDepartment()" class="add-department-button">Add</button>
+                </div> 
+            </div>
+            <div class="dashboard-show-department">
+                <div class="dashboard-show-department-header">
+                    <h2>All Department: </h2>
+                    <button onclick="refreshDepartment()">Refresh</button>
+                </div>
+                <div class="department-table-section">
+                    <table id="department-table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Profit</th>
+                                <th>No. of Employee</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div> 
+        </div>
+        <br>
+        <!-- Employee section -->
+        <div id="employee" class="dashboard-total-layout">
+            <div class="dashboard-add-employee">
+                <h2>Add New Employee: </h2>
+                <div class="employee-form-area">
+                    <p>Name: </p>
+                    <input type="text" id="employeeName">
+                    <p>Role: </p>
+                    <input type="text" id="employeeRole">
+                    <p>Salary: </p>
+                    <input type="number" id="employeeSalary">
+                    <p>Department (ID): </p>
+                    <input type="number" id="employeeDepartmentId">
+                    <p></p>
+                    <button onclick="submit()" class="employee-submit-button">Create</button>
+                </div> 
+            </div>
+            <div class="dashboard-show-employees">
+                <div class="dashboard-show-employees-header">
+                    <h2>All Employees: </h2>
+                    <button onclick="refresh()">Refresh</button>
+                </div>
+                <div class="employee-table-section">
+                    <table id="employee-table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Salary</th>
+                                <th>Department</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div> 
+        </div>
+        <nav class="nav-bar">
+            <a href="#company-finance">Finance</a>
+            <a href="#department">Department</a>
+            <a href="#employee">Employee</a>
+        </nav>
+        
+        <script src="script.js" async defer></script>
+    </body>
+</html>
