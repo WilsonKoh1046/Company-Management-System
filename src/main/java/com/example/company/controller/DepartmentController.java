@@ -29,9 +29,9 @@ public class DepartmentController {
     }
 
     @PostMapping("/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createNewDepartment(@RequestBody Department department) {
+    public ResponseEntity<?> createNewDepartment(@RequestBody Department department) {
         departmentService.createNewDepartment(department);
+        return new ResponseEntity<>("Department created", HttpStatus.CREATED);
     }
 
     @GetMapping("/name/{id}")

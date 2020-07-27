@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -31,7 +32,11 @@ public class DepartmentService {
     }
 
     public List<String> getDepNameById(int id) {
-        return departmentRepository.getDepNameById(id);
+        Optional<List<String>> targeted_department = Optional.ofNullable(departmentRepository.getDepNameById(id));
+        if (targeted_department.isEmpty()) {
+            throw new NoSuchElementException("Department not found");
+        }
+        return targeted_department.get();
     }
 
     private Department toEntity(Department department) {
