@@ -1,5 +1,30 @@
 'use strict'
 
+// Call functions upon reloading the page
+window.onload = () => {
+    refresh();
+    refreshDepartment();
+}
+
+// Detect the screen resolution to determine the layout of department and employee section
+$(window).resize(() => {
+    if ($(window).width() <= 767) {
+        let departmentForm = document.getElementById("department-form");
+        let departmentInfo = document.getElementById("department-info");
+        let employeeForm = document.getElementById("employee-form");
+        let employeeInfo = document.getElementById("employee-info");
+        departmentForm.classList.remove("col-4");
+        departmentForm.classList.add("col");
+        departmentInfo.classList.remove("col-8");
+        departmentInfo.classList.add("col");
+        employeeForm.classList.remove("col-4");
+        employeeForm.classList.add("col");
+        employeeInfo.classList.remove("col-8");
+        employeeInfo.classList.add("col");
+
+    }
+})
+
 function updateCompanyProfit() {
     let profit = document.getElementById("company-profit");
 
@@ -12,7 +37,8 @@ function updateCompanyProfit() {
             profit.innerHTML = "$" + data;
         },
         error: function(error) {
-            alert("Failed to update company's profit");
+            // alert("Failed to update company's profit");
+            errorMessage("company-finance", "Failed to update company's profit");
         }
     })
 }
@@ -34,7 +60,8 @@ function addDepartment() {
             refreshDepartment();
         },
         error: function(error) {
-            alert("Failed to add department");
+            // alert("Failed to add department");
+            errorMessage("department", "Failed to add department");
         }
     })
 }
@@ -67,7 +94,8 @@ function refreshDepartment() {
             updateNumberOfEmployee(data);
         },
         error: function(error) {
-            alert("Failed to refresh department table");
+            // alert("Failed to refresh department table");
+            errorMessage("department", "Failed to refresh department table");
         }
     })
 }
@@ -92,7 +120,7 @@ function submit() {
     let salary = document.getElementById("employeeSalary");
     let departmentId = document.getElementById("employeeDepartmentId");
 
-    let employeeData = {"employeeName": name.value, "employeeRole": role.value, "employeeSalary": salary.value, "departmentId": departmentId.value};
+    let employeeData = {"employeeName": name.value, "employeeRole": role.value, "employeeSalary": salary.value, "depId": departmentId.value};
 
     $.ajax({
         type: "POST",
@@ -111,9 +139,17 @@ function submit() {
             // alert("Successfully created new employee!");
         },
         error: function(error) {
-            alert("Failed to create new employee");
+            // alert("Failed to create new employee");
+            errorMessage("employee", "Failed to create new employee");
         }
     })
+}
+
+function getDepartmentName(depId) {
+    return $.ajax({
+        type: "GET",
+        url: `http://localhost:8080/api/department/name/${depId}`
+    });
 }
 
 function refresh() {
@@ -122,14 +158,14 @@ function refresh() {
         type: "GET",
         url: "http://localhost:8080/api/employee/allEmployees",
         contentType: "application/json",
-        success: function(data) {
+        success: async function(data) {
             let allId = [];
             for (let i = 0; i < employeeTable.rows.length; i++) {
                 allId[i] = employeeTable.rows[i].cells[0].innerHTML;
             }
             console.log(allId);
             for (let i = 0; i < data.length; i++) {
-                // Perform check on all the employee ID to ensure no duplication 
+                // Perform check on all the employee ID to ensure no duplication
                 if (!allId.includes(data[i].employeeId.toString())) {
                     let newEmployeeEntry = employeeTable.insertRow(-1);
                     let newEmployeeID = newEmployeeEntry.insertCell(0);
@@ -141,12 +177,37 @@ function refresh() {
                     newEmployeeName.innerHTML = data[i].employeeName;
                     newEmployeeRole.innerHTML = data[i].employeeRole;
                     newEmployeeSalary.innerHTML = data[i].employeeSalary;
-                    newEmployeeDepartment.innerHTML = data[i].departmentName;
+
+                    try {
+                        let departmentName = await getDepartmentName(data[i].depId);
+                        newEmployeeDepartment.innerHTML = departmentName[0];
+                    } catch(err) {
+                        console.error(err);
+                    }
                 }
             }
         },
         error: function(error) {
-            alert("Failed to refresh employee table");
+            // alert("Failed to refresh employee table");
+            errorMessage("employee", "Failed to refresh employee table");
         }
     })
+}
+
+function errorMessage(sectionId, message) {
+    let section = document.getElementById(sectionId);
+    let messageBox = document.createElement("div");
+    let messageText = document.createElement("p");
+    messageBox.classList.add("alert");
+    messageBox.classList.add("alert-dismissible");
+    messageBox.classList.add("alert-danger");
+    messageText.innerHTML = message;
+    messageBox.appendChild(messageText);
+    section.prepend(messageBox);
+    // make the message box disapper after 2 seconds
+    (() => {
+        setTimeout(() => {
+            messageBox.remove();
+        }, 2000);
+    })();
 }
