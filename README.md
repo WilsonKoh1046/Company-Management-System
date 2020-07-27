@@ -7,4 +7,7 @@ Current features:
 3. Basic accounting module (yet to implement UI).
 
 ### Development
-For development, run the frontend using external server and apply the change to the /resources/static
+```
+mvn spring-boot:run
+```
+For development, run the frontend using external server or live server in VS Code and apply the change to the /resources/static
