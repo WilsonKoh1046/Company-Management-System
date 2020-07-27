@@ -1,30 +1,31 @@
 package com.example.company.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 @Entity
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "employee_auto") // use it in both table so won't share the id sequence
-    @Column(name = "employee_id")
-    private int employeeId;
-    @Column(name = "employee_name")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String employeeName;
     private String employeeRole;
     private int employeeSalary;
+    private int depId;
 
-    @Column(name = "department_id")
-    private int departmentId;
-
-    private String departmentName;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id", nullable = false)
+    @JsonBackReference
+    private Department departmentName;
 
     public int getEmployeeId() {
-        return employeeId;
+        return id;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployeeId(int id) {
+        this.id = id;
     }
 
     public String getEmployeeName() {
@@ -51,19 +52,19 @@ public class Employee {
         this.employeeSalary = employeeSalary;
     }
 
-    public int getDepartmentId() {
-        return departmentId;
+    public int getDepId() {
+        return depId;
     }
 
-    public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
+    public void setDepId(int depId) {
+        this.depId = depId;
     }
 
-    public String getDepartmentName() {
+    public Department getDepartmentName() {
         return departmentName;
     }
 
-    public void setDepartmentName(String departmentName) {
+    public void setDepartmentName(Department departmentName) {
         this.departmentName = departmentName;
     }
 }

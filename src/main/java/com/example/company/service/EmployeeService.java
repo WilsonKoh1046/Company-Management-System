@@ -7,8 +7,10 @@ import com.example.company.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -40,9 +42,13 @@ public class EmployeeService {
         entity.setEmployeeName(employee.getEmployeeName());
         entity.setEmployeeRole(employee.getEmployeeRole());
         entity.setEmployeeSalary(employee.getEmployeeSalary());
-        entity.setDepartmentId(employee.getDepartmentId());
-        Optional<Department> targeted_department = departmentRepository.findById(employee.getDepartmentId());
-        targeted_department.ifPresent(department -> entity.setDepartmentName(department.getDepartmentName()));
+        Optional<Department> targeted_department = departmentRepository.findById(employee.getDepId());
+        if (targeted_department.isEmpty()) {
+            throw new NoSuchElementException("Department Not Found");
+        }
+        entity.setDepId(employee.getDepId());
+        Department department = targeted_department.get();
+        entity.setDepartmentName(department);
         return entity;
     }
 }

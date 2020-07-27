@@ -1,5 +1,7 @@
 package com.example.company.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,23 +10,21 @@ import java.util.List;
 public class Department {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "department_auto")
-    @Column(name = "department_id")
-    private int departmentId;
-    @Column(name = "department_name")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String departmentName;
     private int departmentProfit;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "department_id", referencedColumnName = "department_id")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "departmentName", fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Employee> employees;
 
     public int getDepartmentId() {
-        return departmentId;
+        return id;
     }
 
     public void setDepartmentId(int departmentId) {
-        this.departmentId = departmentId;
+        this.id = departmentId;
     }
 
     public String getDepartmentName() {

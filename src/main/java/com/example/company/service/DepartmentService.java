@@ -30,6 +30,10 @@ public class DepartmentService {
         return list_of_departments;
     }
 
+    public List<String> getDepNameById(int id) {
+        return departmentRepository.getDepNameById(id);
+    }
+
     private Department toEntity(Department department) {
         Department entity = new Department();
         entity.setDepartmentId(department.getDepartmentId());

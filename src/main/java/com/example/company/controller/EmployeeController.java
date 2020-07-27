@@ -4,6 +4,7 @@ import com.example.company.model.Employee;
 import com.example.company.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,9 +22,13 @@ public class EmployeeController {
     }
 
     @PostMapping("/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void addNewEmployee(@RequestBody Employee employee) {
-        employeeService.addNewEmployee(employee);
+    public ResponseEntity<?> addNewEmployee(@RequestBody Employee employee) {
+        try {
+            employeeService.addNewEmployee(employee);
+            return new ResponseEntity<>("Employee added", HttpStatus.CREATED);
+        } catch(Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/allEmployees")
