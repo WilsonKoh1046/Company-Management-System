@@ -1,9 +1,10 @@
 # Company-Management-System
-A company management system developed with Spring Boot, more features coming soon.
+A company management system developed with Spring Boot for backend and Bootstrap & AJAX for frontend, more features coming soon.
 
 Current features:
-1. Create new record of company's department (department's id, name, profit and number of employee in it).
-2. Create new record of employee (employee's id, name, role, salary and the department he/she working in).
+1. Create record of company's department (department's id, name, profit and number of employee in it).
+2. Create record of employee (employee's id, name, role, salary and the department he/she works in).
+3. Basic accounting module (yet to implement UI).
 
 ### Development
 For development, run the frontend using external server and apply the change to the /resources/static
