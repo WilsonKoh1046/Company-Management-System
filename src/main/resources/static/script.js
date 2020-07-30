@@ -21,9 +21,45 @@ $(window).resize(() => {
         employeeForm.classList.add("col");
         employeeInfo.classList.remove("col-8");
         employeeInfo.classList.add("col");
-
     }
 })
+
+function buildDepartmentChart() {
+
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/api/department/chart-dataset",
+        contentType: "application/json",
+        success: function(dataset) {
+            document.getElementById("departmentChart").removeAttribute("style");
+            let ctx = document.getElementById("departmentChart").getContext("2d");
+            let chart = new Chart(ctx, {
+                type: "doughnut",
+                data: {
+                    labels: dataset["Labels"],
+                    datasets: [{
+                        data: dataset["Values"],
+                        backgroundColor: randomColorGenerator(dataset["Labels"].length)
+                    }]
+                }
+            })
+        },
+        error: function(error) {
+            errorMessage("department", "Failed to create chart");
+        }
+    })
+}
+
+function randomColorGenerator(length) {
+    let colors = [];
+    for (let i = 0; i < length; i++) {
+        let r = Math.round(Math.random() * 255);
+        let g = Math.round(Math.random() * 255);
+        let b = Math.round(Math.random() * 255);
+        colors.push(`rgb(${r}, ${g}, ${b})`);
+    }
+    return colors;
+}
 
 function updateCompanyProfit() {
     let profit = document.getElementById("company-profit");
@@ -163,7 +199,6 @@ function refresh() {
             for (let i = 0; i < employeeTable.rows.length; i++) {
                 allId[i] = employeeTable.rows[i].cells[0].innerHTML;
             }
-            console.log(allId);
             for (let i = 0; i < data.length; i++) {
                 // Perform check on all the employee ID to ensure no duplication
                 if (!allId.includes(data[i].employeeId.toString())) {
@@ -180,12 +215,14 @@ function refresh() {
 
                     try {
                         let departmentName = await getDepartmentName(data[i].depId);
-                        newEmployeeDepartment.innerHTML = departmentName[0];
+                        let depName = departmentName[0];
+                        newEmployeeDepartment.innerHTML = depName;
                     } catch(err) {
                         console.error(err);
                     }
                 }
             }
+            buildDepartmentChart();
         },
         error: function(error) {
             // alert("Failed to refresh employee table");
