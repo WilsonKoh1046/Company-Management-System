@@ -3,13 +3,11 @@ package com.example.company.service;
 import com.example.company.model.Department;
 import com.example.company.model.Employee;
 import com.example.company.repository.DepartmentRepository;
+import com.example.company.util.DepartmentChartProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class DepartmentService {
@@ -37,6 +35,12 @@ public class DepartmentService {
             throw new NoSuchElementException("Department not found");
         }
         return targeted_department.get();
+    }
+
+    public Map<String, List<?>> prepareDepartmentChartData() {
+        List<Department> list_of_departments = new ArrayList<>();
+        departmentRepository.findAll().forEach(list_of_departments::add);
+        return DepartmentChartProvider.prepareDataSet(list_of_departments);
     }
 
     private Department toEntity(Department department) {

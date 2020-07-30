@@ -38,4 +38,9 @@ public class DepartmentController {
     public ResponseEntity<?> getDepNameById(@PathVariable int id) {
         return new ResponseEntity<>(departmentService.getDepNameById(id), HttpStatus.OK);
     }
+
+    @GetMapping("/chart-dataset")
+    public ResponseEntity<?> getDepartmentChartDataset() {
+        return new ResponseEntity<>(departmentService.prepareDepartmentChartData(), HttpStatus.OK);
+    }
 }
