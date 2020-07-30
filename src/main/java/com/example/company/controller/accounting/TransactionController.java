@@ -2,7 +2,6 @@ package com.example.company.controller.accounting;
 
 import com.example.company.model.accounting.Transaction;
 import com.example.company.service.accounting.TransactionService;
-import com.example.company.util.BalanceChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +16,8 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    @Autowired
-    private BalanceChecker balanceChecker;
-
-    public TransactionController(TransactionService transactionService, BalanceChecker balanceChecker) {
+    public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
-        this.balanceChecker = balanceChecker;
     }
 
     @PostMapping("/create")
@@ -40,7 +35,7 @@ public class TransactionController {
     @GetMapping("/check-if-balance/{id}")
     public ResponseEntity<?> checkIfBalance(@PathVariable("id") int id) {
         try {
-            return new ResponseEntity<>(balanceChecker.check(id), HttpStatus.OK);
+            return new ResponseEntity<>(transactionService.checkIfBalance(id), HttpStatus.OK);
         } catch(Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

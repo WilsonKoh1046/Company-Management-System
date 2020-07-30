@@ -2,6 +2,7 @@ package com.example.company.service.accounting;
 
 import com.example.company.model.accounting.Transaction;
 import com.example.company.repository.accounting.TransactionRepository;
+import com.example.company.util.BalanceChecker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,14 @@ public class TransactionService {
         List<Transaction> all_transactions = new ArrayList<>();
         transactionRepository.findAll().forEach(all_transactions::add);
         return all_transactions;
+    }
+
+    public Boolean checkIfBalance(int id) {
+        Optional<Transaction> targeted_transaction = transactionRepository.findById(id);
+        if (targeted_transaction.isEmpty()) {
+            throw new NoSuchElementException("Transaction not found");
+        }
+        return BalanceChecker.check(targeted_transaction.get());
     }
 
     private Transaction toEntity(Transaction transaction) {
